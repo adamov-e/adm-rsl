@@ -1,0 +1,4 @@
+import "F:\\dlmsdk\\DLP\\Examples\\aerslfrm\\aerslfrm.d32";
+
+CreateTheForm();
+Exit(1);

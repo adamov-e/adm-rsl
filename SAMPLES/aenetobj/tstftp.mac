@@ -1,0 +1,9 @@
+import aenetobj;
+
+ob=TaeFTP;
+
+
+ob.Host="domain.com";
+ob.Port=25;
+ob.TimeOut=1000;
+ob.Help();

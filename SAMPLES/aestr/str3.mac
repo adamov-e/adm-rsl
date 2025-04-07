@@ -1,0 +1,17 @@
+import
+  "d:\\dlmsdk\\DLP\\Examples\\aestr\\aestr.d32";
+
+Setoutput("d:\\dlmsdk\\DLP\\Examples\\aestr\\str3.htm");
+
+println("<HTML>");
+println("<head>");
+println("<title>���᮪ �।�⮢</title>");
+println("<meta http-equiv=\"Content-Type\" CONTENT=\"text/html; charset=CP866\">");
+println("</head>");
+println("<body>");
+
+println(aeUTF8ToOem("Привет"));
+println(toOem(aeUTF8ToAnsi("Привет")));
+
+println("</body>");
+println("</HTML>");

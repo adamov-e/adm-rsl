@@ -1,0 +1,6 @@
+import
+  aesrv;
+
+ob=TaePrinter(FALSE);
+
+print(ob.Printers);

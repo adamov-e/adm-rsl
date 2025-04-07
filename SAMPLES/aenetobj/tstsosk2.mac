@@ -1,0 +1,86 @@
+import
+ aenetobj;
+
+ob=TaeSocket;
+
+/*ob.Help();*/
+ob.Host="192.168.177.4";
+/*ob.Host="mail.kz";*/
+ob.Port=8080;
+ob.Connect(10000);
+if (ob.Connected)
+/*  ob.Writeln("CONNECT http://mail.kz:110 HTTP/1.1");*/
+/*  ob.Writeln("GET http://mail.kz:110/ HTTP/1.1\r\n");
+  ob.Writeln("Host:mail.kz\r\n");*/
+  ob.Writeln("GET http://mail.kz/ HTTP/1.0");
+  ob.Writeln("Host:mail.kz:25");
+  ob.Writeln("");
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+/*  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+  println("<< ", ob.Readln());
+*/
+/*
+  ob.Writeln("HELO danabank.kz");
+  println("<< ", ob.Readln());
+  ob.Writeln("MAIL FROM:<aen@db.kz>");
+  println("<< ", ob.Readln());
+  ob.Writeln("RCPT TO:<atan@mail.kz>");
+  println("<< ", ob.Readln());
+  ob.Writeln("DATA");
+  println("<< ", ob.Readln());
+  ob.Writeln("From: atan <atan@mail.kz>");
+  ob.Writeln("To: aragon <aen@db.kz>");
+  ob.Writeln("Subject: Testing");
+  ob.Writeln("");
+  ob.Writeln("");
+  ob.Writeln("HI ATAN");
+  ob.Writeln(".");
+  ob.Writeln("QUIT");
+  println("<< ", ob.Readln());
+*/
+  ob.Disconnect();
+end;
+

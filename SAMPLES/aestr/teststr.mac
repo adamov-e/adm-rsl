@@ -1,0 +1,13 @@
+import
+  "d:\\dlmsdk\\DLP\\Examples\\aestr\\aestr.d32";
+
+setoutput("d:\\rsrt\\mac\\teststr.xml");
+
+[<?xml version="1.0" encoding="UTF-16"?>
+<Text>];
+println(aeStringToWideChar("Hello!"));
+/*println(aeAnsiToUTF8("פûשגלעהזפûכעגלהזכפûעגהכאעûהפכמאכהגמûהפמûכהגןעפûגכהטעכגטûפכûגטאכמגûמכפנûגכאמגכהûפנûגאהכמפûגנמכאהפûכמגאנ"));*/
+[</Text>];                 
+                           
+setoutput;                 
+exit(1);                   

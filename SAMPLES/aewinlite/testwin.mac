@@ -1,0 +1,35 @@
+Import  "D:\\dlmsdk\\DLP\\Examples\\aewinlite\\aewinlite.d32";
+
+Class (TWinObj) TRSLWinObj
+  Var btnOK, btnExit, edtText;
+
+  Macro OnMessage(Msg, WPar, LPar, WParH, WParL, LParH, LParL)
+    If (Msg == WM_COMMAND)
+       if (LPar == btnExit)  This.Close; end;
+       if (LPar == btnOK) 
+          This.MsgBox(getText(WndHandle), "111", 0);
+          SetText(WndHandle, "TEXT"); 
+          SetText(btnOK, "TEST");           
+       end;
+    Elif (Msg == WM_SYSCOMMAND)
+    End;
+  End;
+
+  initTWinObj(true, "Тестовое окно!", 10, 10, 500, 500, WS_OVERLAPPED+WS_SYSMENU);
+/*  SetStyle(WndHandle, WS_OVERLAPPEDWINDOW, 10, 10, 500, 500);  */
+/*SetStyle(WndHandle, DS_MODALFRAME+DS_3DLOOK, 10, 10, 500, 500);*/
+  MsgHandler="OnMessage";
+  btnOK = AddChild("BUTTON", "OK", WS_VISIBLE+WS_CHILD+BS_DEFPUSHBUTTON, 15, 185, 60, 20);
+  btnExit = AddChild("BUTTON", "EXIT", WS_VISIBLE+WS_CHILD+BS_DEFPUSHBUTTON, 100, 185, 60, 20);  
+  AddChild("STATIC", "Label", SS_RIGHT+WS_CHILD+WS_VISIBLE, 10, 10, 60, 15);    
+  edtText = AddChild("EDIT", "", ES_LEFT+ES_AUTOHSCROLL+WS_CHILD+WS_VISIBLE+WS_BORDER+WS_TABSTOP, 80, 10, 200, 15);      
+ 
+  End;
+
+
+Var ob=TRSLWinObj;/**/
+
+/*ob.Show(SW_SHOWNORMAL);*/
+ob.Run();
+
+Exit(1);

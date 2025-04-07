@@ -1,0 +1,7 @@
+import "f:\\dlmsdk\\DLP\\Examples\\aestrlist\\strlist.d32";
+var ob;
+msgbox("text");
+ob = aeTStringList;
+msgbox("text");
+ob = NULL;
+msgbox("text");

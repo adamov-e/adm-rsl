@@ -1,0 +1,40 @@
+import
+ aenetobj;
+
+/*
+ob=TaeSMTP;
+
+ob.Host="mail.kz";
+ob.Port=25;
+if (ob.Connect()) 
+println(ob.SendBytes);
+ob.CharSet= "windows-1251";
+ob.Subject=toANSI("тестирование библиотеки");
+ob.FromAddress=toANSI("atan@mail.kz");
+ob.ToAddress=toANSI("atan@mail.kz");
+ob.FromName=toANSI("Ербулат Адамов");
+ob.Text=toANSI("Добрый день! Пишу тебе письмо, ответь мне ");
+ob.SendMail();
+println(ob.SendBytes);
+println(ob.Status);
+if (ob.Connected())
+  ob.Disconnect;
+end;
+else
+  msgbox("Ошибка соединения!");
+end;
+*/
+
+ob=TaeTSocket;
+
+ob.TimeOut=5000;
+ob.Host="192.168.177.110";
+ob.Port=12000;
+v=ob.Connect();
+if (v)
+  msgbox("CONNECT");
+  ob.WriteLn(toANSI("Привет из РСЛ!"));
+  ob.Disconnect;
+else
+  msgbox("NOT CONNECT");
+end;

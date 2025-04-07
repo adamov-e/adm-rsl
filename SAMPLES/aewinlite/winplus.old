@@ -1,0 +1,58 @@
+Unit winplus;
+InterFace
+
+Uses
+    windows,
+    messages,
+    zWinLite,
+    rsltype,
+    rsldll;
+
+Type
+  TWinPlusClass = Class(TLiteWindow)
+    RSLMsgHandler:PChar;
+    RSLObject:Pointer;
+    constructor Create(AWndParent: HWND); override;
+    procedure   WindowProcedure(var Msg: TMessage); override;
+  End;
+
+Implementation
+Uses instsym;
+
+Constructor TWinPlusClass.Create(AWndParent: HWND);
+Begin
+  Inherited;
+  RSLMsgHandler:=NIL;
+End;
+
+Procedure TWinPlusClass.WindowProcedure(var Msg: TMessage);
+Var retVal:VALUE;
+    parms:Packed Array[0..2] of VALUE;
+    id:LongInt;
+Begin
+  Inherited;
+  If (RSLMsgHandler <> NIL) Then
+  Begin
+    RSLValueMake(@retVal);  
+{**************************************************************************
+    //Вариант с использованием GenRun
+    RSLValueSet(@parms[0], V_STRING, PChar('OnMessage'));
+    RSLValueSet(@parms[1], V_GENOBJ, RSLObj);
+    RslCallInstSymbol(GenRunHandle, RSL_DISP_RUN, 2, @parms[0], retVal);
+**************************************************************************}
+    //Вариант с использованием функций юнипровайдера
+    RSLValueSet(@parms[0], V_INTEGER, @Msg.LParam);
+    RSLValueSet(@parms[1], V_INTEGER, @Msg.WParam);
+    RSLValueSet(@parms[2], V_INTEGER, @Msg.Msg);
+    RslObjMemberFromName (RSLObject, RSLMsgHandler, id);
+    RslObjInvoke (RSLObject, id, RSL_DISP_RUN, 3, @parms[0], retVal);
+    //if (retVal.v_type <> V_BOOL) Then RSLError('RSLMsgHandler:Boolean',[]);
+  End;
+
+End;
+
+Initialization
+
+Finalization
+
+End.

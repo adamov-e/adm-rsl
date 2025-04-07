@@ -1,0 +1,42 @@
+import
+ aenetobj;
+
+ob=TaeSMTP;
+
+/*ob.Help();*/
+
+/*ob.Host="mail.kz";*/
+ob.Host="192.168.177.6";
+ob.Port=25;
+/*ob.TimeOut=1000;*/
+/*ob.Connect();*/
+/*if (ob.Connected) */
+ob.CharSet= "windows-1251";
+ob.From="aragon <aen@db.kz>";
+/*
+ob.FromName=toANSI("aragon");
+ob.FromAddress=toANSI("aen@db.kz");
+*/
+ob.ToAddress=toANSI("danabank@db.kz");
+ob.Subject=toANSI("тестирование библиотеки");
+ob.Text=toANSI("Добрый день! Пишу тебе письмо, ответь мне ");
+ob.AddReceiver("atan@mail.kz", "");
+ob.AddReceiver("123@mail.kz", "");
+ob.AddCC("456@db.kz", "");
+/*ob.SendMail();*/
+/*end;*/
+
+  println(ob.From);
+  println(ob.FromName);
+  println(ob.FromAddress);
+  println(ob.ToAddress);
+  println(ob.CCList);
+  println(ob.Text);
+  println(ob.Subject);
+/*
+  println(ob.SendBytes);
+  println(ob.Status);*/
+/*  ob.Disconnect();*/
+/*else*/
+/*  println("Ошибка соединения!");*/
+/*end;*/

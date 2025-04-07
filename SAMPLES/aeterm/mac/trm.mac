@@ -1,0 +1,34 @@
+import aesrv;
+
+//TestTermDLM();
+
+//aeDisableClose();
+
+/*
+ob=TaeClipBoard(FALSE);
+
+ob.Set("1111122222222222222");
+//ob.Clear();
+print(ob.Get());
+*/
+
+
+
+ob=TaePrinter;
+ob.PrinterIndex=1;
+ob.BeginDoc();
+ob.PrintText(200, 500, toANSI("Привет из RSL! Delphi!"));
+ob.EndDoc;
+
+
+/*
+ob=TaePrinter;
+
+println(ob.count);
+println(ob.Printers);
+
+println;
+
+println(ob.Printer(1));
+
+*/

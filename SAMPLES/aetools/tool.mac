@@ -1,0 +1,9 @@
+import
+  "D:\\dlmsdk\\DLP\\examples\\tools\\aetools.d32";
+
+
+Println(aeBalanceName(0, "1001", 0, 1));
+
+/*
+Println(aeAccountName("000031101", 0, 0));
+*/

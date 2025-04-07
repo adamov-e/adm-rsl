@@ -1,0 +1,10 @@
+import
+  "d:\\dlmsdk\\DLP\\Examples\\aestr\\aestr.d32";
+
+Setoutput("d:\\dlmsdk\\DLP\\Examples\\aestr\\str1.txt");
+
+println(aeAnsiToOem("ֿנטגוע Help פûכמגטלמכפûטגלמכפûטלמכפûטל"));
+
+println(aeOemToAnsi("א¨¢¥ג Help ה«₪כ®¢¬ג«הכ¨ג«₪®הכ¢¨ג¬«¨הכ«₪¬"));
+
+SetOutPut();

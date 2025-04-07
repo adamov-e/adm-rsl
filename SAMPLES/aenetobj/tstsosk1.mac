@@ -1,0 +1,28 @@
+import
+ aenetobj;
+/*ob1=TaeSocket;*/
+ob2=TaeSMTP;
+
+/*ob2.Help();*/
+ob2.Host="192.168.177.6";
+/*ob2.Host="mail.kz";*/
+ob2.Port=25;
+ob2.TimeOut=1000;
+ob2.Connect();
+if (ob2.Connected)
+  println("<< ", ob2.Readln());
+  ob2.Writeln("HELO mail.kz");
+  println("<< ", ob2.Readln());
+  ob2.Writeln("MAIL FROM:atan@mail.kz");
+  println("<< ", ob2.Readln());
+  ob2.Writeln("RCPT TO:aen@db.kz");
+  println("<< ", ob2.Readln());
+  ob2.Writeln("DATA");
+  println("<< ", ob2.Readln());
+  ob2.Writeln("HI ATAN");
+  ob2.Writeln(".");
+  ob2.Writeln("QUIT");
+  println("<< ", ob2.Readln());
+  ob2.Disconnect();
+end;
+

@@ -1,0 +1,33 @@
+import
+ aenetobj;
+
+ob=TaeSocket;
+
+/*ob.Help();*/
+ob.Host="192.168.177.6";
+/*ob.Host="mail.kz";*/
+ob.Port=25;
+ob.TimeOut=1000;
+ob.Connect();
+if (ob.Connected)
+  println("<< ", ob.Readln());
+  ob.Writeln("HELO mail.kz");
+  println("<< ", ob.Readln());
+  ob.Writeln("MAIL FROM:<atan@mail.kz>");
+  println("<< ", ob.Readln());
+  ob.Writeln("RCPT TO:<aen@db.kz>");
+  println("<< ", ob.Readln());
+  ob.Writeln("DATA");
+  println("<< ", ob.Readln());
+  ob.Writeln("From: atan <atan@mail.kz>");
+  ob.Writeln("To: aragon <aen@db.kz>");
+  ob.Writeln("Subject: Testing");
+  ob.Writeln("");
+  ob.Writeln("");
+  ob.Writeln("HI ATAN");
+  ob.Writeln(".");
+  ob.Writeln("QUIT");
+  println("<< ", ob.Readln());
+  ob.Disconnect();
+end;
+

@@ -1,0 +1,11 @@
+import
+ aenetobj;
+
+ob=TaePOP3;
+
+
+ob.Help();
+
+ob.Host="mail.kz";
+ob.Port=25;
+ob.TimeOut=1000;

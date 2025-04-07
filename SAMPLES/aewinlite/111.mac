@@ -1,0 +1,11 @@
+println(V_R2M);
+
+class CT
+macro test
+msgbox("111");
+end;
+End;
+
+var ob=CT;
+
+CallR2M(R2M(ob, "test") );

@@ -1,0 +1,13 @@
+import aenetobj;
+
+var ob=TaeHTTP;
+
+ob.Host="mail.kz";
+ob.Port=80;
+ob.Proxy="192.168.177.4";
+ob.ProxyPort=8080;
+ob.TimeOut=1000;
+/*ob.Connect();*/
+ob.Get("http://mail.kz");
+/*ob.Get("http://www.nationalbank.kz/rss/rates_all.xml");*/
+println(ob.Body);

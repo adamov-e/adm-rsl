@@ -1,0 +1,195 @@
+{Шаблон проекта для ДЛМ терминала}
+Library aewint;
+{отключаем выравнивание в рекордах}
+{$A1}
+{устанавливаем расширение файла}
+{$E d32}
+{включаем оптимизацию}
+{$O+}
+
+Uses
+    sysutils,
+    messages,
+    windows,
+    zwinlite,
+    rsltype,
+    termext, 
+    aeconst;
+
+Type
+  TWinPlusClass = Class(TLiteWindow)
+    RSLMsgHandler:PChar;
+    RSLObject:Pointer;
+    Constructor Create(AWndParent: HWND); override;
+    Procedure   WindowProcedure(var Msg: TMessage); Override;
+    Procedure   Run();
+  End;
+
+Var 
+  MainWin:HWND;
+  CurrObj:TWinPlusClass;
+
+////////////////////////////////////////////////////////////////
+//Точка входа в бибилиотеку
+////////////////////////////////////////////////////////////////
+Constructor TWinPlusClass.Create(AWndParent: HWND);
+Begin
+  Inherited;
+  RSLMsgHandler:=NIL;
+  RSLObject:=NIL;
+End;
+
+Procedure TWinPlusClass.WindowProcedure(var Msg: TMessage);
+  Var buff:THandleMsgBuffer;
+Begin
+  Inherited;
+  Buff.Obj:=RSLObject;
+  Buff.Msg:=Msg;
+  If (NOT RSLSendAsync(@buff, SizeOf(THandleMsgBuffer), ServHandleProc, CMD_HandleMessage)) 
+    Then RSLMsgBox('Data not send!',1);
+End;
+
+Procedure TWinPlusClass.Run();
+Var Msg: TMsg;
+Begin
+  Show(SW_SHOW);
+  While (GetMessage(Msg, 0, 0, 0)) Do Begin
+    TranslateMessage(Msg);
+    DispatchMessage(Msg);
+  End;
+End;
+////////////////////////////////////////////////////////////////
+//Создаем объект
+////////////////////////////////////////////////////////////////
+
+Function  mes_CMD_CreateObject(inBuf:Pointer; outBuf:Pointer):LongInt;
+Var oBuff:PPointerBuffer;
+    iBuff:PPointerBuffer;
+Begin
+  iBuff:=inMes;
+  oBuff:=outMes;
+  CurrObj:=TWinPlusClass.Create(0);
+  CurrObj.RSLObject:=iBuff.obj;
+  oBuff.obj:=CurrObj;
+  Result:=SizeOf(TPointerBuffer);
+End;
+//создаем само окно
+
+Function  mes_CMD_CreateWindow(inBuf:Pointer; outBuf:Pointer):LongInt;
+Var obuff:PHWNDBuffer;
+    iBuff:PPointerBuffer;
+Begin
+  iBuff:=inMes;
+  oBuff:=outMes;
+  CurrObj:=iBuff.obj;
+  CurrObj.CreateWindowEx();
+  oBuff.hwin:=CurrObj.WndHandle;
+  Result:=SizeOf(THWNDBuffer);
+End;
+//уничтожаем объект
+
+Function  mes_CMD_DestroyObject(inBuf:Pointer; outBuf:Pointer):LongInt;
+Var ibuff:PPointerBuffer;
+Begin
+  iBuff:=inMes;
+  CurrObj:=iBuff.obj;
+  CurrObj.Free();
+  Result:=0;
+End;
+//Запускаем цикл сообщений
+
+Function  mes_CMD_ObjectShow(inBuf:Pointer; outBuf:Pointer):LongInt;
+Var ibuff:PPointerBuffer;
+Begin
+  iBuff:=inMes;
+  CurrObj:=iBuff.obj;
+  CurrObj.Run();
+  Result:=0;
+End;
+//
+Function  mes_CMD_ObjectClose(inBuf:Pointer; outBuf:Pointer):LongInt;
+Var ibuff:PPointerBuffer;
+Begin
+  iBuff:=inMes;
+  CurrObj:=iBuff.obj;
+  CurrObj.Close();
+  Result:=0;
+End;
+//
+Function  mes_CMD_AddChild(inBuf:Pointer; outBuf:Pointer):LongInt;
+Var iBuff:PChildBuffer;
+    oBuff:PHWNDBuffer;
+Begin
+  iBuff:=inMes; oBuff:=outMes;
+  CurrObj:=iBuff.obj;
+  oBuff.hwin:=CurrObj.AddChild(iBuff.ClassName, iBuff.Text, iBuff.Style, iBuff.X, iBuff.Y, iBuff.W, iBuff.H);
+  Result:=SizeOf(THWNDBuffer);
+End;
+//
+Function  mes_CMD_MsgBox(inBuf:Pointer; outBuf:Pointer):LongInt;
+begin
+  CurrObj:=PMsgBoxBuffer(inBuf).obj;
+  CurrObj.MsgBox(PMsgBoxBuffer(inBuf).Text, PMsgBoxBuffer(inBuf).Caption, PMsgBoxBuffer(inBuf).uType);
+  Result:=0;
+end;
+////////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////////
+{вызывается при загрузке модуля в память}
+Procedure mes_Load();
+Begin
+  MainWin:=GetForegroundWindow();
+End;
+{вызывается при выгрузке модуля из памяти}
+Procedure mes_UnLoad();
+Begin
+End;
+{вызывается для получения версии}
+Procedure mes_Version (inMes:PTermVersion);
+Begin
+End;
+////////////////////////////////////////////////////////////////
+//Точка входа в бибилиотеку
+////////////////////////////////////////////////////////////////
+Function RslExtMessageProc(cmd:LongInt; inMes, outMes:Pointer):LongInt; cdecl;
+Begin 
+  Case (cmd) Of
+    CMD_CreateObject:Begin Result:=mes_CMD_CreateObject(inBuf, outBuf); End;
+    CMD_CreateWindow:Begin Result:=mes_CMD_CreateWindow(inBuf, outBuf); End;
+    CMD_DestroyObject:Begin Result:=mes_CMD_DestroyObject(inBuf, outBuf); End;
+    CMD_ObjectShow:Begin Result:=mes_CMD_ObjectShow(inBuf, outBuf); End;
+    CMD_ObjectClose:Begin Result:=mes_CMD_ObjectClose(inBuf, outBuf); End;
+    CMD_AddChild:Begin Result:=mes_CMD_AddChild(inBuf, outBuf); End;
+    CMD_MsgBox:Begin Result:=mes_CMD_MsgBox(inBuf, outBuf); End;
+    TRMDLM_LOAD:Begin mes_Load(); Result:=0; End;
+    TRMDLM_UNLOAD:Begin mes_UnLoad(); Result:=0; End;
+    TRMDLM_VERSION:Begin mes_Version(PTermVersion(inMes)); Result:=0; End;
+//    EXIT_APPARTMENT:Begin app.process (cmd,inMes, outMes); Result:=0; End;
+//    CMD_SAMPLEAPART:Begin Result:=app.process (cmd,inMes, outMes); End;
+  Else
+    Result:=0;
+  End;
+End;
+
+////////////////////////////////////////////////////////////////
+//Точка входа в бибилиотеку
+////////////////////////////////////////////////////////////////
+Procedure DLLEntryPoint(Reason: DWORD);
+Begin
+  Case Reason of
+    Dll_Process_Attach:; //Подключение процесса
+    Dll_Thread_Attach:;  //Подключение потока
+    Dll_Thread_Detach:;  //Отключение потока
+    Dll_Process_Detach:; //Отключение процесса
+  End; // case
+End;
+
+Exports
+RslExtMessageProc;
+
+Begin
+  If (Not Assigned(DllProc)) then begin
+    DllProc := @DLLEntryPoint;
+    DllEntryPoint(Dll_Process_Attach);
+  End;
+End.

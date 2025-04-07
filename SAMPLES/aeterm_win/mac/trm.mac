@@ -1,0 +1,54 @@
+import "f:\\dlmsdk\\DLP\\Examples\\term_win\\aesrv.d32";
+
+/*println(aeGetTermDir(toANSI("Выбери")));*/
+
+/*println(aeOpenFileDialog("Select File", "c:\\", "*.*"));*/
+
+/*println(aeSaveFileDialog("Select File", "c:\\", "*.*"));*/
+
+/* TestTermDLM(); */
+
+/* aeDisableClose(); */
+
+/*
+ob=TaeClipBoard(FALSE);
+ob.Set("1111122222222222222");
+ob.Clear();
+print(ob.Get());
+*/
+
+/*пример печати 1*/
+
+ob=TaePrinter;
+ob.Remote=FALSE;
+ob.Title="TEST";
+/*ob.PrinterIndex=1;
+ob.BeginDoc();
+ob.PrintText(20, 50, toANSI("Привет из RSL!"));
+/*ob.DirectPrint("&l1O"+toANSI(" Test Test! "));*/
+ob.EndDoc;
+*/
+
+
+
+/*пример печати 2*/
+/*
+ob=TaePrinter;
+ob.Remote=FALSE;
+ob.BeginPrint();
+ob.WritePrinter("&l1O"+toANSI(" Test Test! "));
+ob.EndPrint();
+*/
+
+
+/*
+ob=TaePrinter;
+ob.Remote=FALSE;
+ob.Title="TEST";
+println(ob.count);
+println(ob.Printers);
+
+println;
+
+println(ob.Printer(1));
+*/
